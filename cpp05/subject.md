@@ -1,31 +1,28 @@
-Turn-in directory: ex01/
-Files to turn in: Files from the previous exercise + Form.{h, hpp}, Form.cpp
+No, you need form 28B, not 28C...
+Turn-in directory: ex02/
+Files to turn in: Makefile, main.cpp, Bureaucrat.[{h, hpp},cpp], + AForm.[{h, hpp},cpp], ShrubberyCreationForm.[{h, hpp},cpp], + RobotomyRequestForm.[{h, hpp},cpp], PresidentialPardonForm.[{h, hpp},cpp]
 Forbidden functions: None
 
-Now that you have bureaucrats, let’s give them something to do. What better activity could there be than filling out a stack of forms?
+Now that you have basic forms, it’s time to create a few more that actually do something. In all cases, the base class Form must be an abstract class and should therefore be renamed AForm. Keep in mind that the form’s attributes need to remain private and that they belong to the base class.
 
-Let’s create a Form class. It has:
-• A constant name.
-• A boolean indicating whether it is signed (at construction, it is not).
-• A constant grade required to sign it.
-• A constant grade required to execute it.
-All these attributes are private, not protected.
+Add the following concrete classes:
+• ShrubberyCreationForm: Required grades: sign 145, exec 137
+Creates a file <target>_shrubbery in the working directory and writes ASCII trees inside it.
 
-The grades of the Form follow the same rules as those of the Bureaucrat. Thus, the following exceptions will be thrown if a form’s grade is out of bounds:
+• RobotomyRequestForm: Required grades: sign 72, exec 45 
+Makes some drilling noises, then informs that <target> has been robotomized successfully 50% of the time. Otherwise, it informs that the robotomy failed.
 
-Form::GradeTooHighException and Form::GradeTooLowException.
+• PresidentialPardonForm: Required grades: sign 25, exec 5
+Informs that <target> has been pardoned by Zaphod Beeblebrox. All of them take only one parameter in their constructor: the target of the form. For example, "home" if you want to plant shrubbery at home.
 
-As before, write getters for all attributes and overload the insertion («) operator to print all the form’s information.
+Now, add the execute(Bureaucrat const & executor) const member function to the base form and implement a function to execute the form’s action in the concrete classes. You must check that the form is signed and that the grade of the bureaucrat attempting to execute the form is high enough. Otherwise, throw an appropriate exception.
 
-Also, add a beSigned() member function to the Form that takes a Bureaucrat as a parameter. It changes the form’s status to signed if the bureaucrat’s grade is high enough (greater than or equal to the required one). Remember, grade 1 is higher than grade 2.
+Whether you check the requirements in every concrete class or in the base class (and then call another function to execute the form) is up to you. However, one way is more elegant than the other.
 
-If the grade is too low, throw a Form::GradeTooLowException.
+Lastly, add the executeForm(AForm const & form) const member function to the Bureaucrat class. It must attempt to execute the form. If successful, print something like:
 
-Then, modify the signForm() member function in the Bureaucrat class. This function must call Form::beSigned() to attempt to sign the form. If the form is signed successfully, it will print something like:
+<bureaucrat> executed <form>
 
-<bureaucrat> signed <form>
-
-Otherwise, it will print something like:
-<bureaucrat> couldn’t sign <form> because <reason>.
+If not, print an explicit error message.
 
 Implement and submit some tests to ensure everything works as expected.
