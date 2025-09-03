@@ -1,40 +1,31 @@
-Turn-in directory: ex00/
-Files to turn in: Makefile, main.cpp, Bureaucrat.{h, hpp}, Bureaucrat.cpp
+Turn-in directory: ex01/
+Files to turn in: Files from the previous exercise + Form.{h, hpp}, Form.cpp
 Forbidden functions: None
 
-Please note that exception classes do not have to be designed in Orthodox Canonical Form. However, every other class must follow it.
+Now that you have bureaucrats, let’s give them something to do. What better activity could there be than filling out a stack of forms?
 
-Let’s design an artificial nightmare of offices, corridors, forms, and waiting queues. Sounds fun? No? Too bad.
-
-First, start with the smallest cog in this vast bureaucratic machine: the Bureaucrat.
-
-A Bureaucrat must have:
+Let’s create a Form class. It has:
 • A constant name.
-• A grade that ranges from 1 (highest possible grade) to 150 (lowest possible grade).
+• A boolean indicating whether it is signed (at construction, it is not).
+• A constant grade required to sign it.
+• A constant grade required to execute it.
+All these attributes are private, not protected.
 
-Any attempt to instantiate a Bureaucrat with an invalid grade must throw an exception:
-either a Bureaucrat::GradeTooHighException or a Bureaucrat::GradeTooLowException.
+The grades of the Form follow the same rules as those of the Bureaucrat. Thus, the following exceptions will be thrown if a form’s grade is out of bounds:
 
-You will provide getters for both attributes: getName() and getGrade().
-You must also implement two member functions to increment or decrement the bureaucrat’s grade.
-If the grade goes out of range, both functions must throw the same exceptions as the constructor.
+Form::GradeTooHighException and Form::GradeTooLowException.
 
-Remember, since grade 1 is the highest and 150 the lowest, incrementing a grade 3 should result in a grade 2 for the bureaucrat.
+As before, write getters for all attributes and overload the insertion («) operator to print all the form’s information.
 
-The thrown exceptions must be catchable using try and catch blocks:
+Also, add a beSigned() member function to the Form that takes a Bureaucrat as a parameter. It changes the form’s status to signed if the bureaucrat’s grade is high enough (greater than or equal to the required one). Remember, grade 1 is higher than grade 2.
 
-try
-{
-/* do some stuff with bureaucrats */
-}
+If the grade is too low, throw a Form::GradeTooLowException.
 
-catch (std::exception & e)
-{
-/* handle exception */
-}
+Then, modify the signForm() member function in the Bureaucrat class. This function must call Form::beSigned() to attempt to sign the form. If the form is signed successfully, it will print something like:
 
-You must implement an overload of the insertion («) operator to print output in the following format (without the angle brackets):
+<bureaucrat> signed <form>
 
-<name>, bureaucrat grade <grade>.
+Otherwise, it will print something like:
+<bureaucrat> couldn’t sign <form> because <reason>.
 
-As usual, submit some tests to prove that everything works as expected.
+Implement and submit some tests to ensure everything works as expected.
