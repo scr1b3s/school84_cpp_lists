@@ -1,28 +1,26 @@
-No, you need form 28B, not 28C...
-Turn-in directory: ex02/
-Files to turn in: Makefile, main.cpp, Bureaucrat.[{h, hpp},cpp], + AForm.[{h, hpp},cpp], ShrubberyCreationForm.[{h, hpp},cpp], + RobotomyRequestForm.[{h, hpp},cpp], PresidentialPardonForm.[{h, hpp},cpp]
+At least this beats coffee-making
+
+Turn-in directory: ex03/
+Files to turn in: Files from previous exercises + Intern.{h, hpp}, Intern.cpp
 Forbidden functions: None
 
-Now that you have basic forms, it’s time to create a few more that actually do something. In all cases, the base class Form must be an abstract class and should therefore be renamed AForm. Keep in mind that the form’s attributes need to remain private and that they belong to the base class.
 
-Add the following concrete classes:
-• ShrubberyCreationForm: Required grades: sign 145, exec 137
-Creates a file <target>_shrubbery in the working directory and writes ASCII trees inside it.
+Since filling out forms all day would be too cruel for our bureaucrats, interns exist to take on this tedious task. In this exercise, you must implement the Intern class. The intern has no name, no grade, and no unique characteristics. The only thing bureaucrats care about is that they do their job.
 
-• RobotomyRequestForm: Required grades: sign 72, exec 45 
-Makes some drilling noises, then informs that <target> has been robotomized successfully 50% of the time. Otherwise, it informs that the robotomy failed.
+However, the intern has one key ability: the makeForm() function. This function takes two strings as parameters: the first one represents the name of a form, and the second one represents the target of the form. It returns a pointer to a AForm object (corresponding to the form name passed as a parameter), with its target initialized to the second parameter.
 
-• PresidentialPardonForm: Required grades: sign 25, exec 5
-Informs that <target> has been pardoned by Zaphod Beeblebrox. All of them take only one parameter in their constructor: the target of the form. For example, "home" if you want to plant shrubbery at home.
+It should print something like:
+Intern creates <form>
 
-Now, add the execute(Bureaucrat const & executor) const member function to the base form and implement a function to execute the form’s action in the concrete classes. You must check that the form is signed and that the grade of the bureaucrat attempting to execute the form is high enough. Otherwise, throw an appropriate exception.
+If the provided form name does not exist, print an explicit error message.
 
-Whether you check the requirements in every concrete class or in the base class (and then call another function to execute the form) is up to you. However, one way is more elegant than the other.
+You must avoid unreadable and messy solutions, such as using an excessive if/elseif/else structure. This kind of approach will not be accepted during the evaluation process. You’re not in the Piscine (pool) anymore. As usual, you must test everything to ensure it works as expected.
 
-Lastly, add the executeForm(AForm const & form) const member function to the Bureaucrat class. It must attempt to execute the form. If successful, print something like:
-
-<bureaucrat> executed <form>
-
-If not, print an explicit error message.
-
-Implement and submit some tests to ensure everything works as expected.
+For example, the following code creates a RobotomyRequestForm targeted at "Bender":
+```cpp
+{
+Intern someRandomIntern;
+AForm* rrf;
+rrf = someRandomIntern.makeForm("robotomy request", "Bender");
+}
+```
