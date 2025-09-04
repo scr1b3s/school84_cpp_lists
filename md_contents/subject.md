@@ -1,27 +1,20 @@
-Turn-in directory: ex00/
+Turn-in directory: ex02/
 Files to turn in: Makefile, *.cpp, *.{h, hpp}
-Allowed functions: Any function to convert from a string to an int, a float, or a double. This will help, but won’t do the whole job.
+Forbidden functions: std::typeinfo
 
-Write a class ScalarConverter that will contain only one static method "convert" that will take as a parameter a string representation of a C++ literal in its most common form and output its value in the following series of scalar types:
+Implement a Base class that has a public virtual destructor only. Create three empty classes A, B, and C, that publicly inherit from Base.
 
-• char
-• int
-• float
-• double
+These four classes don’t have to be designed in the Orthodox Canonical Form.
 
-As this class doesn’t need to store anything at all, it must not be instantiable by users.
+Implement the following functions:
 
-Except for char parameters, only the decimal notation will be used.
+``Base * generate(void);``
+It randomly instantiates A, B, or C and returns the instance as a Base pointer. Feel free to use anything you like for the random choice implementation.
 
-Examples of char literals: ’c’, ’a’, ...
-To make things simple, please note that non-displayable characters shouldn’t be used as inputs. If a conversion to char is not displayable, print an informative message.
+``void identify(Base* p);``
+It prints the actual type of the object pointed to by p: "A", "B", or "C".
 
-Examples of int literals: 0, -42, 42...
+``void identify(Base& p);``
+It prints the actual type of the object referenced by p: "A", "B", or "C". Using a pointer inside this function is forbidden. Including the typeinfo header is forbidden.
 
-Examples of float literals: 0.0f, -4.2f, 4.2f...
-
-You have to handle these pseudo-literals as well (you know, for science): -inff, +inff, and nanf.
-
-Examples of double literals: 0.0, -4.2, 4.2...
-
-You have to handle these pseudo-literals as well (you know, for fun): -inf, +inf, and nan.
+Write a program to test that everything works as expected.
