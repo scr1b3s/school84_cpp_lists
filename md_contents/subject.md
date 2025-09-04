@@ -1,26 +1,27 @@
-At least this beats coffee-making
+Turn-in directory: ex00/
+Files to turn in: Makefile, *.cpp, *.{h, hpp}
+Allowed functions: Any function to convert from a string to an int, a float, or a double. This will help, but won’t do the whole job.
 
-Turn-in directory: ex03/
-Files to turn in: Files from previous exercises + Intern.{h, hpp}, Intern.cpp
-Forbidden functions: None
+Write a class ScalarConverter that will contain only one static method "convert" that will take as a parameter a string representation of a C++ literal in its most common form and output its value in the following series of scalar types:
 
+• char
+• int
+• float
+• double
 
-Since filling out forms all day would be too cruel for our bureaucrats, interns exist to take on this tedious task. In this exercise, you must implement the Intern class. The intern has no name, no grade, and no unique characteristics. The only thing bureaucrats care about is that they do their job.
+As this class doesn’t need to store anything at all, it must not be instantiable by users.
 
-However, the intern has one key ability: the makeForm() function. This function takes two strings as parameters: the first one represents the name of a form, and the second one represents the target of the form. It returns a pointer to a AForm object (corresponding to the form name passed as a parameter), with its target initialized to the second parameter.
+Except for char parameters, only the decimal notation will be used.
 
-It should print something like:
-Intern creates <form>
+Examples of char literals: ’c’, ’a’, ...
+To make things simple, please note that non-displayable characters shouldn’t be used as inputs. If a conversion to char is not displayable, print an informative message.
 
-If the provided form name does not exist, print an explicit error message.
+Examples of int literals: 0, -42, 42...
 
-You must avoid unreadable and messy solutions, such as using an excessive if/elseif/else structure. This kind of approach will not be accepted during the evaluation process. You’re not in the Piscine (pool) anymore. As usual, you must test everything to ensure it works as expected.
+Examples of float literals: 0.0f, -4.2f, 4.2f...
 
-For example, the following code creates a RobotomyRequestForm targeted at "Bender":
-```cpp
-{
-Intern someRandomIntern;
-AForm* rrf;
-rrf = someRandomIntern.makeForm("robotomy request", "Bender");
-}
-```
+You have to handle these pseudo-literals as well (you know, for science): -inff, +inff, and nanf.
+
+Examples of double literals: 0.0, -4.2, 4.2...
+
+You have to handle these pseudo-literals as well (you know, for fun): -inf, +inf, and nan.
