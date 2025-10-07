@@ -1,20 +1,52 @@
-Turn-in directory: ex02/
-Files to turn in: Makefile, *.cpp, *.{h, hpp}
-Forbidden functions: std::typeinfo
+Start with a few functions
 
-Implement a Base class that has a public virtual destructor only. Create three empty classes A, B, and C, that publicly inherit from Base.
+Turn-in directory: ex00/
+Files to turn in: Makefile, main.cpp, whatever.{h, hpp}
+Forbidden functions: None
 
-These four classes don’t have to be designed in the Orthodox Canonical Form.
+Implement the following function templates:
 
-Implement the following functions:
+• swap: Swaps the values of two given parameters. Does not return anything.
+• min: Compares the two values passed as parameters and returns the smallest one. If they are equal, it returns the second one.
 
-``Base * generate(void);``
-It randomly instantiates A, B, or C and returns the instance as a Base pointer. Feel free to use anything you like for the random choice implementation.
+• max: Compares the two values passed as parameters and returns the greatest one. If they are equal, it returns the second one.
 
-``void identify(Base* p);``
-It prints the actual type of the object pointed to by p: "A", "B", or "C".
+These functions can be called with any type of argument. The only requirement is that the two arguments must have the same type and must support all the comparison operators.
 
-``void identify(Base& p);``
-It prints the actual type of the object referenced by p: "A", "B", or "C". Using a pointer inside this function is forbidden. Including the typeinfo header is forbidden.
+! Templates must be defined in the header files.
 
-Write a program to test that everything works as expected.
+Running the following code:
+
+```cpp
+int main( void ) {
+int a = 2;
+int b = 3;
+
+::swap( a, b );
+std::cout << "a = " << a << ", b = " << b << std::endl;
+std::cout << "min( a, b ) = " << ::min( a, b ) << std::endl;
+std::cout << "max( a, b ) = " << ::max( a, b ) << std::endl;
+
+std::string c = "chaine1";
+std::string d = "chaine2";
+
+::swap(c, d);
+std::cout << "c = " << c << ", d = " << d << std::endl;
+std::cout << "min( c, d ) = " << ::min( c, d ) << std::endl;
+std::cout << "max( c, d ) = " << ::max( c, d ) << std::endl;
+
+return 0;
+
+}
+```
+
+Should output:
+
+```shell
+a = 3, b = 2
+min(a, b) = 2
+max(a, b) = 3
+c = chaine2, d = chaine1
+min(c, d) = chaine1
+max(c, d) = chaine2
+```
