@@ -1,29 +1,22 @@
 NAME = array
+SRCS = main.cpp
+OBJS = $(SRCS:.cpp=.o)
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -I . -std=c++98
-RM = rm -f
-
-SRCDIR = .
-OBJDIR = .
-
-SOURCES = main.cpp
-OBJECTS = $(SOURCES:.cpp=.o)
-
-HEADERS = Array.hpp Array.tpp
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJECTS)
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
 
-%.o: %.cpp $(HEADERS)
+%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJECTS)
+	rm -f $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 

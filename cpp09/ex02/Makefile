@@ -1,5 +1,5 @@
-NAME = span
-SRCS = main.cpp Span.cpp
+NAME = PmergeMe
+SRCS = main.cpp PmergeMe.cpp
 OBJS = $(SRCS:.cpp=.o)
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 CXX = c++

@@ -1,25 +1,29 @@
 #ifndef WHATEVER_HPP
 #define WHATEVER_HPP
 
-template<typename T>
-void swap(T& a, T& b) {
-    T temp = a;
-    a = b;
-    b = temp;
+// swap: Swaps the values of two given parameters
+template <typename T>
+void swap(T &a, T &b)
+{
+	T temp = a;
+	a = b;
+	b = temp;
 }
 
-template<typename T>
-T min(T a, T b) {
-    if (a < b)
-        return a;
-    return b;  // If equal, return second one as per subject requirement
+// min: Returns the smallest of two values
+// If equal, returns the second one
+template <typename T>
+T min(T a, T b)
+{
+	return (b < a) ? b : a;
 }
 
-template<typename T>
-T max(T a, T b) {
-    if (a > b)
-        return a;
-    return b;  // If equal, return second one as per subject requirement
+// max: Returns the greatest of two values
+// If equal, returns the second one
+template <typename T>
+T max(T a, T b)
+{
+	return (b > a) ? b : a;
 }
 
 #endif

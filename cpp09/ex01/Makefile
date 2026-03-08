@@ -1,5 +1,5 @@
-NAME = span
-SRCS = main.cpp Span.cpp
+NAME = RPN
+SRCS = main.cpp RPN.cpp
 OBJS = $(SRCS:.cpp=.o)
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 CXX = c++

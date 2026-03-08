@@ -1,29 +1,22 @@
 NAME = iter
-CXX = c++
+SRCS = main.cpp
+OBJS = $(SRCS:.cpp=.o)
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
-RM = rm -f
-
-SRCDIR = .
-OBJDIR = .
-
-SOURCES = main.cpp
-OBJECTS = $(SOURCES:.cpp=.o)
-
-HEADERS = iter.hpp
+CXX = c++
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJECTS)
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
 
-%.o: %.cpp $(HEADERS)
+%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJECTS)
+	rm -f $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 

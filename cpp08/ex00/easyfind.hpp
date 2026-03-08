@@ -2,15 +2,26 @@
 #define EASYFIND_HPP
 
 #include <algorithm>
-#include <stdexcept>
+#include <exception>
 
-template<typename T>
-typename T::iterator easyfind(T& container, int value) {
-    typename T::iterator it = std::find(container.begin(), container.end(), value);
-    if (it == container.end()) {
-        throw std::runtime_error("Value not found in container");
-    }
-    return it;
+class NotFoundException : public std::exception
+{
+	public:
+		virtual const char *what() const throw()
+		{
+			return "Element not found in container";
+		}
+};
+
+// easyfind: Find first occurrence of integer in container
+// Throws NotFoundException if value not found
+template <typename T>
+typename T::iterator easyfind(T &container, int value)
+{
+	typename T::iterator it = std::find(container.begin(), container.end(), value);
+	if (it == container.end())
+		throw NotFoundException();
+	return it;
 }
 
 #endif

@@ -1,105 +1,81 @@
 #include "Span.hpp"
 #include <algorithm>
-#include <limits>
+#include <climits>
 
-// Orthodox Canonical Form implementation
-
-Span::Span() : _maxSize(0) {
-    // Default constructor creates span with 0 capacity
+// Constructor
+Span::Span(unsigned int N) : _maxSize(N)
+{
 }
 
-Span::Span(unsigned int N) : _maxSize(N) {
-    // Reserve space for efficiency
-    _numbers.reserve(N);
+// Copy constructor
+Span::Span(const Span &other) : _maxSize(other._maxSize), _numbers(other._numbers)
+{
 }
 
-Span::Span(const Span& other) : _numbers(other._numbers), _maxSize(other._maxSize) {
-    // Copy constructor
+// Assignment operator
+Span &Span::operator=(const Span &other)
+{
+	if (this != &other)
+	{
+		_maxSize = other._maxSize;
+		_numbers = other._numbers;
+	}
+	return *this;
 }
 
-Span& Span::operator=(const Span& other) {
-    if (this != &other) {
-        _numbers = other._numbers;
-        _maxSize = other._maxSize;
-    }
-    return *this;
+// Destructor
+Span::~Span(void)
+{
 }
 
-Span::~Span() {
-    // Destructor - vector handles its own cleanup
+// Add single number
+void Span::addNumber(int number)
+{
+	if (_numbers.size() >= _maxSize)
+		throw SpanException();
+	_numbers.push_back(number);
 }
 
-// Core functionality implementation
-
-void Span::addNumber(int number) {
-    if (_numbers.size() >= _maxSize) {
-        throw SpanFullException();
-    }
-    _numbers.push_back(number);
+// Find shortest span
+unsigned int Span::shortestSpan(void)
+{
+	if (_numbers.size() <= 1)
+		throw SpanException();
+	
+	std::vector<int> sorted = _numbers;
+	std::sort(sorted.begin(), sorted.end());
+	
+	unsigned int shortest = INT_MAX;
+	for (size_t i = 0; i < sorted.size() - 1; i++)
+	{
+		unsigned int diff = sorted[i + 1] - sorted[i];
+		if (diff < shortest)
+			shortest = diff;
+	}
+	
+	return shortest;
 }
 
-int Span::shortestSpan() const {
-    if (_numbers.size() < 2) {
-        throw SpanTooSmallException();
-    }
-    
-    // Create a sorted copy to find adjacent differences efficiently
-    std::vector<int> sorted = _numbers;
-    std::sort(sorted.begin(), sorted.end());
-    
-    int minSpan = std::numeric_limits<int>::max();
-    
-    // Find minimum difference between adjacent elements
-    for (size_t i = 1; i < sorted.size(); ++i) {
-        int span = sorted[i] - sorted[i - 1];
-        if (span < minSpan) {
-            minSpan = span;
-        }
-    }
-    
-    return minSpan;
+// Find longest span
+unsigned int Span::longestSpan(void)
+{
+	if (_numbers.size() <= 1)
+		throw SpanException();
+	
+	std::vector<int>::iterator minIt = std::min_element(_numbers.begin(), _numbers.end());
+	std::vector<int>::iterator maxIt = std::max_element(_numbers.begin(), _numbers.end());
+	
+	return *maxIt - *minIt;
 }
 
-int Span::longestSpan() const {
-    if (_numbers.size() < 2) {
-        throw SpanTooSmallException();
-    }
-    
-    // Find min and max elements
-    std::vector<int>::const_iterator minIt = std::min_element(_numbers.begin(), _numbers.end());
-    std::vector<int>::const_iterator maxIt = std::max_element(_numbers.begin(), _numbers.end());
-    
-    return *maxIt - *minIt;
+// Getter for size
+unsigned int Span::size(void) const
+{
+	return _numbers.size();
 }
 
-// Utility methods implementation
-
-unsigned int Span::size() const {
-    return _numbers.size();
-}
-
-unsigned int Span::maxSize() const {
-    return _maxSize;
-}
-
-bool Span::isEmpty() const {
-    return _numbers.empty();
-}
-
-bool Span::isFull() const {
-    return _numbers.size() >= _maxSize;
-}
-
-// Exception implementations
-
-const char* Span::SpanFullException::what() const throw() {
-    return "Span is full - cannot add more numbers";
-}
-
-const char* Span::SpanTooSmallException::what() const throw() {
-    return "Span contains less than 2 numbers - cannot calculate span";
-}
-
-const char* Span::SpanEmptyException::what() const throw() {
-    return "Span is empty";
+// Getter for max size
+unsigned int Span::getMaxSize(void) const
+{
+	return _maxSize;
 }
